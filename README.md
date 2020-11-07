@@ -51,6 +51,8 @@ The browsable API ensures that all the endpoints you create in your API are able
 By default, the API will return the format specified by the headers, which in the case of the browser is HTML. The format can be specified using `?format=` in the request, so you can look at the raw JSON response in a browser by adding `?format=json` to the URL.
 
 ### Local Development without docker:
+**escape this section, if you want to run the app inside docker container, **
+
 - install MongoDB Community Edition and make sure it is running on defualt port
 - run:
 ```bash
@@ -73,7 +75,7 @@ python manage.py shell < import_mock_data.py
 this done automatically when you work with docker developmnet container, see below.
 
 ### Local Development with docker:
-this for development purposes so no nginx, .. to run in production with Gunicorn - Nginx, please see Production section.
+**this for development purposes so no nginx, .. to run in production with Gunicorn - Nginx, please see Production section.**
 
 - Build the image:
 ```bash
@@ -120,7 +122,7 @@ importing mock data in production is unlikly, but if you want to import mock dat
 ```bash
 #python manage.py shell < import_mock_data.py
 ```
-**warnning: make sure to uncomment this line after running it, else every time the production containers will run it will delete all books and import the mock data.**
+**warnning: make sure to comment this line after running it, else every time the production containers will run it will delete all books and import the mock data.**
 
 if you need to check the logs, run:
 ```bash
