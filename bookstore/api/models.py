@@ -15,4 +15,3 @@ class Book(models.Model):
 
     def get_absolute_url(self):     
         return f"/api/books/{self.id}/"
-    
