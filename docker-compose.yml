@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+    web:
+      build: ./bookstore
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - ./bookstore/:/usr/src/app/
+      ports:
+        - 8000:8000
+      env_file:
+        - ./.env.dev
+    mongo:
+      image: mongo:4.4.1-bionic
+      restart: always
+      volumes:
+        - mongo_data:/var/lib/mongodb/data/
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=codescalers
+        - MONGO_DB=books_db_dev
+    
+    mongo-express:
+      image: mongo-express
+      restart: always
+      ports:
+        - 8081:8081
+      environment:
+        - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+        - ME_CONFIG_MONGODB_ADMINPASSWORD=codescalers
+
+volumes:
+  mongo_data:
