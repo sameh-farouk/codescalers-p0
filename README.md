@@ -118,7 +118,7 @@ docker-compose -f docker-compose.prod.yml up -d --build
 then visit http://localhost
 
 #### import mock data:
-importing mock data in production is unlikly, but if you want to import mock data to production db as in the development mode, please uncomment this line in entrypoint.prod.sh then rebuild, but this will delete any books data in the production db.
+importing mock data in production is unlikly, but if you want to import mock data to production db as in the development mode, please uncomment this line in `entrypoint.prod.sh` then rebuild, but this will delete any books data in the production db.
 ```bash
 #python manage.py shell < import_mock_data.py
 ```
