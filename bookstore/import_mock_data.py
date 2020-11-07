@@ -12,7 +12,7 @@
 import csv
 from api.models import Book
 
-CSV_PATH = '../MOCK_DATA.csv'
+CSV_PATH = './MOCK_DATA.csv'
 
 contSuccess = 0
 # Remove all data from Table
