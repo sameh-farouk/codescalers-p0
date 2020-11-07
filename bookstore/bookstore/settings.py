@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'g*opmn=l@n@5(ok#9s$qbu340a)s+fcx@c%74+a7&xrt9i0bp('
+SECRET_KEY = os.environ.get("SECRET_KEY", 'foo')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", True))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split(" ")
 
 
 # Application definition
@@ -83,13 +83,17 @@ WSGI_APPLICATION = 'bookstore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'book_db_dev',
-        'HOST': '127.0.0.1',
-        'PORT': 27017,
+        'ENGINE': os.environ.get("MONGO_ENGINE", "djongo"),
+        "CLIENT": {
+            "host": os.environ.get("MONGO_HOST", "127.0.0.1"),
+            "port": int(os.environ.get("MONGO_PORT", 27017)),
+            "password": os.environ.get("MONGO_PASSWORD", ""),
+            "username": os.environ.get("MONGO_USER", ""),
+            "name": os.environ.get("MONGO_DATABASE", "db")
+        },
+        'ENFORCE_SCHEMA': int(os.environ.get("MONGO_ENFORCE_SCHEMA", True))
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -127,7 +131,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/staticfiles/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
