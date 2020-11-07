@@ -14,3 +14,4 @@ class BookViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['author_first_name', 'author_last_name']
     search_fields = ['title', '=isbn']
+    
