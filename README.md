@@ -89,6 +89,13 @@ while the containers running, execute this command to run the tests:
 ```bash
 docker-compose -f docker-compose.yml exec web python manage.py test
 ```
+#### browsable API:
+
+Visiting the url directly from the browser will display human-friendly HTML output discribe each resource available with **browsable and clickable urls** for easy API browsing by humans.
+
+The browsable API ensures that all the endpoints you create in your API are able to respond both with machine readable (in JSON) and human readable (in HTML) representations.
+
+By default, the API will return the format specified by the headers, which in the case of the browser is HTML. The format can be specified using `?format=` in the request, so you can look at the raw JSON response in a browser by adding `?format=json` to the URL.
 
 ## API Reference
 #### GET: Get all Books using paginated API
