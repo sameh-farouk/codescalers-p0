@@ -66,11 +66,15 @@ python manage.py test
 ```
 
 #### import mock data:
+i wrote small script to import books mock data from csv file to db, to import it run this command
 ```bash
 python manage.py shell < import_mock_data.py
 ```
+this done automatically when you work with docker developmnet container, see below.
 
 ### Local Development with docker:
+this for development purposes so no nginx, .. to run in production with Gunicorn - Nginx, please see Production section.
+
 - Build the image:
 ```bash
 docker-compose build
@@ -96,6 +100,36 @@ docker-compose down -v
 while the containers running, execute this command to run the tests:
 ```bash
 docker-compose -f docker-compose.yml exec web python manage.py test
+```
+
+## Production
+for production environments, we use Gunicorn, a production-grade WSGI server, and Nginx to act as a reverse proxy for Gunicorn to handle client requests as well as serve up static files.
+
+Review [Using NGINX and NGINX Plus as an Application Gateway with uWSGI and Django](https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/) for more info on configuring Nginx to work with Django.
+
+to run the production containers (web, mongo, and nginx):
+
+```bash
+docker-compose -f docker-compose.prod.yml up -d --build
+```
+
+then visit http://localhost
+
+#### import mock data:
+importing mock data in production is unlikly, but if you want to import mock data to production db as in the development mode, please uncomment this line in entrypoint.prod.sh then rebuild, but this will delete any books data in the production db.
+```bash
+#python manage.py shell < import_mock_data.py
+```
+**warnning: make sure to uncomment this line after running it, else every time the production containers will run it will delete all books and import the mock data.**
+
+if you need to check the logs, run:
+```bash
+docker-compose -f docker-compose.prod.yml logs -f
+```
+
+Spin down the production containers:
+```bash
+docker-compose -f docker-compose.prod.yml down -v
 ```
 
 ## API Reference
@@ -213,31 +247,14 @@ curl --location --request DELETE '{{URL}}/api/books/1' \
 - Status Code:
 204
 
-## Production
-for production environments, we use Gunicorn, a production-grade WSGI server, and Nginx to act as a reverse proxy for Gunicorn to handle client requests as well as serve up static files.
-
-Review [Using NGINX and NGINX Plus as an Application Gateway with uWSGI and Django](https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/) for more info on configuring Nginx to work with Django.
-
-to run the production containers:
-
-```bash
-docker-compose -f docker-compose.prod.yml up -d --build
-```
-
-then visit http://localhost
-
-if you need to check the logs, run:
-```bash
-docker-compose -f docker-compose.prod.yml logs -f
-```
-Spin down the production containers:
-```bash
-docker-compose -f docker-compose.prod.yml down -v
-```
 ## Authors
 - sameh abouelsaad
 
 ## Acknowledgements
-- https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#nginx
 - https://github.com/nesdis/djongo
+- https://www.django-rest-framework.org/tutorial/quickstart/
+- https://docs.docker.com/compose/django/
+- https://hub.docker.com/_/mongo
+- https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
+- https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#nginx
 
