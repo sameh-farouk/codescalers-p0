@@ -34,11 +34,12 @@ pip install -r requirements.dev.txt
 This will install all of the required packages we selected within the `requirements.dev.txt` file.
 
 ##### Key Dependencies
-Django==3.0.5
-djangorestframework==3.12.2
-django-cors-headers==3.5.0
-djongo==1.3.3
-django-filter
+- Django==3.0.5
+- djangorestframework==3.12.2
+- django-cors-headers==3.5.0
+- djongo==1.3.3
+- django-filter
+
 note: For production environments, we'll add on Nginx and Gunicorn.
 
 ### Local Development without docker:
@@ -48,35 +49,37 @@ note: For production environments, we'll add on Nginx and Gunicorn.
 python manage.py migrate
 python manage.py runserver
 ```
-- visit 127.0.0.1:8000 for api overview
+- visit http://127.0.0.1:8000/ for api overview
+
 #### tests:    
 - to run tests
 ```bash
 python manage.py test
 ```
+
 #### import mock data:
 ```bash
 python manage.py shell < import_mock_data.py
 ```
 
 ### Local Development with docker:
-Build the image:
+- Build the image:
 ```bash
 docker-compose build
 ```
-Once the images are built (web, mongo, mongo expree), run the containers:
+- Once the images are built (web, mongo, mongo expree), run the containers:
 ```bash
 docker-compose up -d
 ```
-Navigate to http://localhost:8000/ to view the web service.
+- Navigate to http://localhost:8000/ to view the web service.
 
-also you can access mongo-express by visit http://localhost:8081
+note: you can access mongo-express by visit http://localhost:8081
 
-if you need to check the logs, run:
+- if you need to check the logs, run:
 ```bash
 docker-compose -f docker-compose.yml logs -f
 ```
-Spin down the development containers:
+- Spin down the development containers:
 ```bash
 docker-compose down -v
 ```
@@ -89,40 +92,47 @@ docker-compose -f docker-compose.yml exec web python manage.py test
 
 ## API Reference
 #### GET: Get all Books using paginated API
-`{{URL}}/api/book
+##### {{URL}}/api/book
 
 - Example Request:
+```bash
 curl --location --request GET '{{URL}}/api/books'
+```
 
 - Example Response:
+```bash
 {"count":1000,"next":"http://127.0.0.1:8000/api/books/?page=2","previous":null,"results":[{"id":1,"isbn":"454220598-3","title":"The Two Policemen","author_last_name":"Raimondo","author_first_name":"Snelle","page_count":28,"description":"elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed"}, ...]}
-
+```
 - Status Code:
 200
 
 - PARAMS:
-page                int : the page number
-search              str : isbn or book title
-author_first_name   str
-author_last_name    str
-ordering            str : one of this options [isbn, title, author_first_name, author_last_name] , add minus sign before the option for descending order`
+    - page                int : the page number
+    - search              str : isbn or book title
+    - author_first_name   str
+    - author_last_name    str
+    - ordering            str : one of this options [isbn, title, author_first_name, author_last_name] , add minus sign before the option for descending order`
 
 #### GET: Get Book by ID
-{{URL}}/api/book/1
+##### {{URL}}/api/book/1
 
 - Example Request:
+```bash
 curl --location --request GET '{{URL}}/api/books/1'
+```
 
 - Example Response:
+```bash
 {"id":1,"isbn":"454220598-3","title":"The Two Policemen","author_last_name":"Raimondo","author_first_name":"Snelle","page_count":28,"description":"elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed"}
-
+```
 - Status Code:
 200
 
 #### POST: Create Book
-{{URL}}/api/book/
+##### {{URL}}/api/book/
 
 - Example Request:
+```bash
 curl --location --request POST '{{URL}}/api/books/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -133,17 +143,19 @@ curl --location --request POST '{{URL}}/api/books/' \
     "author_first_name": "mike",
     "page_count": 213
 }'
-
+```
 - Example Response:
+```bash
 {"id":1001,"isbn":"1234567891234","title":"Mr Hyde","author_last_name":"jakson","author_first_name":"mike","page_count":213,"description":"testdesc"}
-
+```
 - Status Code:
 201
 
 #### PUT: Update Book
-{{URL}}/api/book/1/
+##### {{URL}}/api/book/1/
 
 - Example Request:
+```bash
 curl --location --request PUT '{{URL}}/api/books/1/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -154,36 +166,40 @@ curl --location --request PUT '{{URL}}/api/books/1/' \
     "author_first_name": "mike",
     "page_count": 220
 }'
-
+```
 - Example Response:
+```bash
 {"id":1,"isbn":"1231231231231","title":"Mr Hyde","author_last_name":"jakson","author_first_name":"mike","page_count":220,"description":"some desc"}
-
+```
 - Status Code:
 200
 
 #### PATCH: Partly Update Book
-{{URL}}/api/book/1/
+##### {{URL}}/api/book/1/
 
 - Example Request:
+```bash
 curl --location --request PATCH '{{URL}}/api/books/1/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "description": "new desc"
 }'
-
+```
 - Example Response:
+```bash
 {"id":1,"isbn":"454220598-3","title":"The Two Policemen","author_last_name":"Raimondo","author_first_name":"Snelle","page_count":28,"description":"new desc"}
-
+```
 - Status Code:
 200
 
 #### DEL: Delete Book
-{{URL}}/api/book/1/
+##### {{URL}}/api/book/1/
 
 - Example Request:
+```bash
 curl --location --request DELETE '{{URL}}/api/books/1' \
 --data-raw ''
-
+```
 - No Response Body
 
 - Status Code:
@@ -211,6 +227,7 @@ Spin down the production containers:
 docker-compose -f docker-compose.prod.yml down -v
 ```
 ## Authors
+- sameh abouelsaad
 
 ## Acknowledgements
 - https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#nginx
