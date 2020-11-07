@@ -92,7 +92,7 @@ docker-compose -f docker-compose.yml exec web python manage.py test
 
 ## API Reference
 #### GET: Get all Books using paginated API
-##### {{URL}}/api/book
+##### {{URL}}/api/books
 
 - Example Request:
 ```bash
@@ -114,7 +114,7 @@ curl --location --request GET '{{URL}}/api/books'
     - ordering            str : one of this options [isbn, title, author_first_name, author_last_name] , add minus sign before the option for descending order`
 
 #### GET: Get Book by ID
-##### {{URL}}/api/book/1
+##### {{URL}}/api/books/1
 
 - Example Request:
 ```bash
@@ -129,7 +129,7 @@ curl --location --request GET '{{URL}}/api/books/1'
 200
 
 #### POST: Create Book
-##### {{URL}}/api/book/
+##### {{URL}}/api/books/
 
 - Example Request:
 ```bash
@@ -152,7 +152,7 @@ curl --location --request POST '{{URL}}/api/books/' \
 201
 
 #### PUT: Update Book
-##### {{URL}}/api/book/1/
+##### {{URL}}/api/books/1/
 
 - Example Request:
 ```bash
@@ -175,7 +175,7 @@ curl --location --request PUT '{{URL}}/api/books/1/' \
 200
 
 #### PATCH: Partly Update Book
-##### {{URL}}/api/book/1/
+##### {{URL}}/api/books/1/
 
 - Example Request:
 ```bash
@@ -193,7 +193,7 @@ curl --location --request PATCH '{{URL}}/api/books/1/' \
 200
 
 #### DEL: Delete Book
-##### {{URL}}/api/book/1/
+##### {{URL}}/api/books/1/
 
 - Example Request:
 ```bash
