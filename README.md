@@ -51,7 +51,7 @@ The browsable API ensures that all the endpoints you create in your API are able
 By default, the API will return the format specified by the headers, which in the case of the browser is HTML. The format can be specified using `?format=` in the request, so you can look at the raw JSON response in a browser by adding `?format=json` to the URL.
 
 ### Local Development without docker:
-**escape this section, if you want to run the app inside docker container, **
+**escape this section, if you want to run the app inside docker container.**
 
 - install MongoDB Community Edition and make sure it is running on defualt port
 - run:
